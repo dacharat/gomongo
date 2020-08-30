@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  go-docker-image:
+    build: ./
+    image: gomongo
+    ports:
+      - "3000:8080"
+    container_name: gomongo
+    networks:
+      - gomongo
+    volumes:
+      - ./:/app
+
+  db:
+    image: mongo
+    container_name: gomongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-db:/data/db
+    networks:
+      - gomongo
+    restart: always
+
+volumes:
+  mongo-db:
+networks:
+  gomongo:
